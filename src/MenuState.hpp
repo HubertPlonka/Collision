@@ -7,7 +7,6 @@
 enum class MenuOption
 {
     Play,
-    Game,
     Options,
     Exit
 };
@@ -19,6 +18,8 @@ public:
 
     void handleEvent(const sf::Event& e);
     void setNextState(std::unique_ptr<class State> state);
+    void exit();
+    void run(sf::RenderWindow& window);
 
 private:
     sf::RenderWindow& window;
