@@ -10,7 +10,20 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(PCMan src/main.cpp  "src/MenuState.cpp" "src/main.cpp" "src/PlayState.cpp" "src/OptionsState.cpp" "src/CurrentState.cpp")
+set(PACMAN_SOURCES 
+    src/main.cpp
+    src/MenuState.hpp
+    src/MenuState.cpp
+    src/PlayState.hpp
+    src/PlayState.cpp
+    src/CurrentState.hpp
+    src/CurrentState.cpp
+    src/OptionsState.hpp
+    src/OptionsState.cpp    
+    src/State.hpp
+)
+
+add_executable(PCMan ${PACMAN_SOURCES})
 target_link_libraries(PCMan PRIVATE sfml-graphics)
 target_compile_features(PCMan PRIVATE cxx_std_20)
 

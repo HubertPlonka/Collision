@@ -1,9 +1,8 @@
 #pragma once
-#include <memory>
 #include "State.hpp"
-#include "CurrentState.hpp"
 
-class PlayState : public State {
+class PlayState
+{
 public:
-    static std::unique_ptr<State, std::default_delete<State>> getNew();
+	// static std::unique_ptr<State, std::default_delete<State>> getNew();
 };

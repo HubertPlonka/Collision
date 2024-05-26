@@ -1,8 +1,5 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include <memory>
-#include "CurrentState.hpp"
 #include "State.hpp"
 
 enum class MenuOption
@@ -12,10 +9,12 @@ enum class MenuOption
     Exit
 };
 
-class MenuState
+class MenuState : public State
 {
 public:
-    MenuState(sf::RenderWindow& window);
+    MenuState();
+
+    void update() override;
 
     void handleEvent(const sf::Event& e);
     void setNextState(std::unique_ptr<State> state);
@@ -23,7 +22,6 @@ public:
     void run(sf::RenderWindow& window);
 
 private:
-    sf::RenderWindow& window;
+    /*sf::RenderWindow& window;*/
     MenuOption selectedOption = MenuOption::Play;
-    State* nextState;
 };
