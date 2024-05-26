@@ -1,37 +1,32 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
-#include "MenuState.hpp"
-//#include "PlayState.hpp"
-//#include "OptionsState.hpp"
+#include "Game.hpp"
 
 int main()
 {
 	sf::RenderWindow window( sf::VideoMode( 800, 600 ), "PCMan" );
-	std::unique_ptr< State > menuState = std::make_unique< MenuState >();
-	// CurrentState::set(std::move(menuState));
-	// MenuState menuState(window);
+	Game game{};
+	game.init();
 
 	while( window.isOpen() )
 	{
+		window.clear();
+
 		sf::Event event;
 		while( window.pollEvent( event ) )
 		{
-			/* {
-				menuState.handleEvent(e);
-			}*/
-			// if (event.type = sf::Event::Closed)
-			//     window.close();
-
-			// CurrentState::get()->handleEvent(e);
+			game.handleEvent( event );
 		}
 
-		// CurrentState::get()->update(sf::seconds(1.0f / 60.0f));
-		// CurrentState::get()->render(window);
-		/*
-		window.clear();
-		menuState.run(window);
+		game.update();
+		game.render( window );
+
 		window.display();
-		*/
+
+		if (!game.isInProgress())
+		{
+			window.close();
+		}
 	}
 
 	return 0;

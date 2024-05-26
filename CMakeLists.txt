@@ -21,6 +21,9 @@ set(PACMAN_SOURCES
     src/OptionsState.hpp
     src/OptionsState.cpp    
     src/State.hpp
+    src/Game.hpp
+    src/Game.cpp
+    src/GameDto.hpp
 )
 
 add_executable(PCMan ${PACMAN_SOURCES})

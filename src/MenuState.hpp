@@ -1,27 +1,26 @@
 #pragma once
-#include <SFML/Window.hpp>
 #include "State.hpp"
-
-enum class MenuOption
-{
-    Play,
-    Options,
-    Exit
-};
+#include "GameDto.hpp"
 
 class MenuState : public State
 {
 public:
-    MenuState();
+	MenuState( GameDto& gameDto );
 
-    void update() override;
+	void update() override;
+	void render( sf::RenderWindow& window ) override;
+	void handleEvent( const sf::Event& event ) override;
 
-    void handleEvent(const sf::Event& e);
-    void setNextState(std::unique_ptr<State> state);
-    void exit();
-    void run(sf::RenderWindow& window);
+	void exit();
 
 private:
-    /*sf::RenderWindow& window;*/
-    MenuOption selectedOption = MenuOption::Play;
+	enum class MenuOption
+	{
+		Play,
+		Options,
+		Exit
+	};
+
+	MenuOption selectedOption = MenuOption::Play;
+	GameDto& m_gameDto;
 };
