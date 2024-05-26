@@ -41,45 +41,40 @@ void MenuState::handleEvent( const sf::Event& event )
 	if( event.type == sf::Event::KeyPressed )
 	{
 		switch( event.key.code )
-	     {
-	     case sf::Keyboard::Up:
-	         if (selectedOption == MenuOption::Options || selectedOption == MenuOption::Exit)
-	             selectedOption = MenuOption::Play;
-	         break;
+		{
+		case sf::Keyboard::Up:
+			if( selectedOption == MenuOption::Options || selectedOption == MenuOption::Exit )
+				selectedOption = MenuOption::Play;
+			break;
 
-	    case sf::Keyboard::Down:
-	        if (selectedOption == MenuOption::Play)
-	            selectedOption = MenuOption::Options;
-	        else if (selectedOption == MenuOption::Options)
-	            selectedOption = MenuOption::Exit;
-	        break;
+		case sf::Keyboard::Down:
+			if( selectedOption == MenuOption::Play )
+				selectedOption = MenuOption::Options;
+			else if( selectedOption == MenuOption::Options )
+				selectedOption = MenuOption::Exit;
+			break;
 
-	    case sf::Keyboard::Return:
-	        switch (selectedOption)
-	        {
-	        case MenuOption::Play:
-	            //setNextState(PlayState::get());
-	            break;
+		case sf::Keyboard::Return:
+			switch( selectedOption )
+			{
+			case MenuOption::Play:
+				// m_gameDto = StateId::Level;
+				break;
 
-	        case MenuOption::Options:
-	            //setNextState(OptionsState::get());
-	            break;
+			case MenuOption::Options:
+				// m_gameDto = StateId::Options;
+				break;
 
-	        case MenuOption::Exit:
-	            exit();
-	            break;
-	        }
-	        break;
-	    }
+			case MenuOption::Exit:
+				exit();
+				break;
+			}
+			break;
+		}
 	}
 }
 
 void MenuState::exit()
 {
 	m_gameDto.isInProgress = false;
-	// if (nextState)
-	//{
-	//     window.close();
-	//     nextState->run(window);
-	// }
 }

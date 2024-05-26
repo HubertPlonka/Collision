@@ -16,8 +16,6 @@ set(PACMAN_SOURCES
     src/MenuState.cpp
     src/PlayState.hpp
     src/PlayState.cpp
-    src/CurrentState.hpp
-    src/CurrentState.cpp
     src/OptionsState.hpp
     src/OptionsState.cpp    
     src/State.hpp
