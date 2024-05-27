@@ -1,8 +1,12 @@
 #pragma once
-#include <memory>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics.hpp>
 
-class State {
+class State
+{
 public:
-    virtual ~State() {}
-    virtual std::unique_ptr<State> clone() const = 0;
+	virtual ~State()								= default;
+	virtual void update()							= 0;
+	virtual void render( sf::RenderWindow& window ) = 0;
+	virtual void handleEvent( const sf::Event& e )	= 0;
 };
