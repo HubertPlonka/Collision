@@ -1,33 +1,32 @@
 #include <SFML/Graphics.hpp>
-#include <memory>
-#include "Game.hpp"
+#include "circle.h"
 
 int main()
 {
-	sf::RenderWindow window( sf::VideoMode( 800, 600 ), "PCMan" );
-	Game game{};
-	game.init();
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Collision!!!!!!!!!!!!!!");
+    sf::CircleShape shape(100.f);
+    shape.setFillColor(sf::Color::Green);
+    Circle circle(sf::Vector2f(400, 300), 20);
 
-	while( window.isOpen() )
-	{
-		window.clear();
+    circle.shape.setPosition(400, 300);
+    circle.shape.setRadius(30);
+    circle.shape.setFillColor(sf::Color::Red);
 
-		sf::Event event;
-		while( window.pollEvent( event ) )
-		{
-			game.handleEvent( event );
-		}
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        //sf::Mouse::setPosition(sf::Vector2i(400, 300), window);
+        circle.update();
+        window.clear();
+        window.draw(shape);
+        window.draw(circle.shape);
+        window.display();
+    }
 
-		game.update();
-		game.render( window );
-
-		window.display();
-
-		if (!game.isInProgress())
-		{
-			window.close();
-		}
-	}
-
-	return 0;
+    return 0;
 }
