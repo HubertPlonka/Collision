@@ -13,9 +13,9 @@ FetchContent_MakeAvailable(SFML)
 set(COLLISION_SOURCES 
     src/main.cpp
     
- "src/circle.cpp" "src/circle.h" "src/collision.cpp")
+ "src/circle.cpp" "src/circle.h" "src/collision.cpp" "src/collision.h")
 
-add_executable(Collision ${COLLISION_SOURCES} "src/circle.cpp" "src/circle.h" "src/collision.cpp")
+add_executable(Collision ${COLLISION_SOURCES} "src/circle.cpp" "src/circle.h" "src/collision.cpp" "src/collision.h")
 target_link_libraries(Collision PRIVATE sfml-graphics)
 target_compile_features(Collision PRIVATE cxx_std_20)
 

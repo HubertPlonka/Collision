@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "circle.h"
+#include "collision.h"
 
 int main()
 {
@@ -25,6 +26,7 @@ int main()
         window.clear();
         window.draw(shape);
         window.draw(circle.shape);
+        Collision::collide(circle, shape);
         window.display();
     }
 
