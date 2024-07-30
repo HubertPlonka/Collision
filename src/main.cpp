@@ -1,10 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include "circle.h"
+
 #include "collision.h"
 #include "wheel.h"
 #include "rectangle.h"
 #include "shapeManager.h"
 #include "triangle.h"
+
 
 
 int main()
@@ -47,6 +49,7 @@ int main()
         shapeManager.drawAll(window);
         window.draw(circle.shape);
 
+
         bool isColliding = false;
         for (Shape* shape : shapeManager.shapes) {
             if (Collision::collide(circle, *shape)) {
@@ -60,6 +63,7 @@ int main()
         else {
             circle.shape.setFillColor(sf::Color::Red);
         }
+
 
         window.display();
     }
