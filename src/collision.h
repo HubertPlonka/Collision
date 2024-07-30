@@ -1,9 +1,9 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include "circle.h"
+class Circle;
+class Shape;
 
 class Collision {
 public:
-    static void collide(Circle& circle, const sf::CircleShape& shape);
-}; 
+    static bool collide(const Circle& circle, const Shape& shape);
+};

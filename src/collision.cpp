@@ -1,15 +1,10 @@
 #include "collision.h"
 #include "circle.h"
-#include <SFML/Graphics.hpp>
+#include "shape.h"
 
-void Collision::collide(Circle& circle, const sf::CircleShape& shape) {
+bool Collision::collide(const Circle& circle, const Shape& shape) {
     sf::FloatRect circleBox = circle.shape.getGlobalBounds();
-    sf::FloatRect shapeBox = shape.getGlobalBounds();
+    sf::FloatRect shapeBox = shape.getBounds();
 
-    if (circleBox.intersects(shapeBox)) {
-        circle.shape.setFillColor(sf::Color::Yellow);
-    }
-    else {
-        circle.shape.setFillColor(sf::Color::Red);
-    }
+    return circleBox.intersects(shapeBox);
 }
