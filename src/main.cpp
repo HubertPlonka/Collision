@@ -1,10 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include "circle.h"
+
 #include "collision.h"
 #include "wheel.h"
 #include "rectangle.h"
 #include "shapeManager.h"
 #include "triangle.h"
+
 
 
 int main()
