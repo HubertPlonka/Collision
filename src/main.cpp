@@ -23,7 +23,7 @@ int main()
 	std::shared_ptr<Shape> wheelptr(wheel);
 	shapeManager.addShape(wheelptr);
 
-	Rectangle* rectangle = new Rectangle(100, 500, 200, 10, sf::Color::Blue);
+	Rectangle* rectangle = new Rectangle(100, 500, 200, 50, sf::Color::Blue);
 	std::shared_ptr<Shape> rectangleptr(rectangle);
 	shapeManager.addShape(rectangleptr);
 

@@ -11,6 +11,10 @@ bool Collision::collide(const Circle& circle, const Shape& shape) {
 
 #include "collision.h"
 #include "shape.h"
+#include "circle.h"
+#include "rectangle.h"
+#include "triangle.h"
+#include "wheel.h"
 #include <cmath>
 
 namespace Collision {
@@ -48,17 +52,32 @@ namespace Collision {
     }
 
     bool collideRectangle(const Circle& circle, const Rectangle& rectangle) {
-        sf::Vector2f p1 = rectangle.getPosition();
-        sf::Vector2f p2 = sf::Vector2f(p1.x + rectangle.getSize().x, p1.y);
-        sf::Vector2f p3 = sf::Vector2f(p1.x + rectangle.getSize().x, p1.y + rectangle.getSize().y);
-        sf::Vector2f p4 = sf::Vector2f(p1.x, p1.y + rectangle.getSize().y);
+        sf::FloatRect circleBounds = circle.shape.getGlobalBounds();
+        sf::FloatRect rectangleBounds = rectangle.getBounds();
 
-        float distance1 = distancePointLine(circle.shape.getPosition(), p1, p2);
-        float distance2 = distancePointLine(circle.shape.getPosition(), p2, p3);
-        float distance3 = distancePointLine(circle.shape.getPosition(), p3, p4);
-        float distance4 = distancePointLine(circle.shape.getPosition(), p4, p1);
+        if (circleBounds.intersects(rectangleBounds)) {
+            sf::Vector2f circleCenter = circle.shape.getPosition();
+            sf::Vector2f rectangleCenter(rectangleBounds.left + rectangleBounds.width / 2.0f, rectangleBounds.top + rectangleBounds.height / 2.0f);
 
-        return distance1 < circle.shape.getRadius() || distance2 < circle.shape.getRadius() || distance3 < circle.shape.getRadius() || distance4 < circle.shape.getRadius();
+            sf::Vector2f axis1 = sf::Vector2f(rectangle.getBounds().width, 0.0f);
+            sf::Vector2f axis2 = sf::Vector2f(0.0f, rectangle.getBounds().height);
+            sf::Vector2f axis3(rectangleBounds.width, rectangleBounds.height);
+
+            float circleRadius = circle.shape.getRadius();
+            float rectangleHalfWidth = rectangle.getBounds().width / 2.0f;
+            float rectangleHalfHeight = rectangle.getBounds().height / 2.0f;
+
+            float projection1 = std::abs((circleCenter.x - rectangleCenter.x) * axis1.x + (circleCenter.y - rectangleCenter.y) * axis1.y);
+            float projection2 = std::abs((circleCenter.x - rectangleCenter.x) * axis2.x + (circleCenter.y - rectangleCenter.y) * axis2.y);
+            float projection3 = std::abs((circleCenter.x - rectangleCenter.x) * axis3.x + (circleCenter.y - rectangleCenter.y) * axis3.y);
+
+            if (projection1 > (circleRadius + rectangleHalfWidth) || projection2 > (circleRadius + rectangleHalfHeight ||
+                projection3 > (circleRadius + std::sqrt(rectangleHalfWidth * rectangleHalfWidth + rectangleHalfHeight * rectangleHalfHeight)))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     float distancePointLine(const sf::Vector2f& point, const sf::Vector2f& lineStart, const sf::Vector2f& lineEnd) {
