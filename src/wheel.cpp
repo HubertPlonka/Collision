@@ -14,3 +14,14 @@ sf::FloatRect Wheel::getBounds() const {
 	return wheel.getGlobalBounds();
 }
 
+ShapeType Wheel::getType() const {
+	return ShapeType::Wheel;
+}
+
+sf::Vector2f Wheel::getPosition() const {
+	return wheel.getPosition();
+}
+
+float Wheel::getRadius() const {
+	return float(wheel.getRadius());
+}

@@ -39,12 +39,12 @@ float Circle::down()
     return this->shape.getPosition().y + shape.getRadius();
 }
 
-float Circle::getRadius()
+float Circle::getRadius() const
 {
     return shape.getRadius();
 }
 
-sf::Vector2f Circle::getPosition()
+sf::Vector2f Circle::getPosition() const
 {
     return shape.getPosition();
 }

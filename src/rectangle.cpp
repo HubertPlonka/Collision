@@ -12,3 +12,7 @@ void Rectangle::draw(sf::RenderWindow& window){
 sf::FloatRect Rectangle::getBounds() const {
 	return rectangle.getGlobalBounds();
 }
+
+ShapeType Rectangle::getType() const {
+	return ShapeType::Rectangle;
+}
