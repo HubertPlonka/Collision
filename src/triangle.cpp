@@ -17,3 +17,10 @@ sf::FloatRect Triangle::getBounds() const {
     return triangle_.getGlobalBounds();
 }
 
+ShapeType Triangle::getType() const {
+    return ShapeType::Triangle;
+}
+
+const sf::ConvexShape& Triangle::getTriangle() const {
+    return triangle_;
+}

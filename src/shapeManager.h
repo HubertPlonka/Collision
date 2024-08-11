@@ -5,9 +5,9 @@
 
 class ShapeManager {
 public:
-	void addShape(Shape* shape);
+	void addShape(std::shared_ptr<Shape> shape);
 	void drawAll(sf::RenderWindow& window);
-	const std::vector<Shape*>& getShapes() const;
+	const std::vector<std::shared_ptr<Shape>> getShapes() const;
 //private:
-	std::vector<Shape*> shapes;
+	std::vector<std::shared_ptr<Shape>> shapes;
 };

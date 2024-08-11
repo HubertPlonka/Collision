@@ -13,8 +13,8 @@ public:
 	}
 
 	void update();
-	sf::Vector2f getPosition();
-	float getRadius();
+	sf::Vector2f getPosition() const;
+	float getRadius() const;
 	float left();
 	float right();
 	float up();

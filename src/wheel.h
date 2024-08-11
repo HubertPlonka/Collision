@@ -10,5 +10,8 @@ private:
 public:
 	Wheel(int x, int y, int radius, sf::Color color);
 	void draw(sf::RenderWindow& window) override;
-	sf::FloatRect getBounds() const;
+	sf::FloatRect getBounds() const override;
+	ShapeType getType() const override;
+	sf::Vector2f getPosition() const;
+	float getRadius() const;
 };
