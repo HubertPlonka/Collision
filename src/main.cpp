@@ -19,7 +19,7 @@ int main()
 	circle.shape.setFillColor(sf::Color::Red);
 	ShapeManager shapeManager;
 
-	Wheel* wheel = new Wheel(200, 150, 50, sf::Color::Green);
+	Wheel* wheel = new Wheel(300, 150, 50, sf::Color::Green);
 	std::shared_ptr<Shape> wheelptr(wheel);
 	shapeManager.addShape(wheelptr);
 
