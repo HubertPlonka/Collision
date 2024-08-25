@@ -15,9 +15,13 @@ bool Collision::collide(const Circle& circle, const Shape& shape) {
 #include "rectangle.h"
 #include "triangle.h"
 #include "wheel.h"
+#include "vector2f.h"
 #include <cmath>
+#include <cassert>
+#include <iostream>
 
-namespace Collision {
+namespace Collision
+{
 
     bool collide(const Circle& circle, const Shape& shape) {
         const auto& shapeType = shape.getType();
@@ -34,9 +38,83 @@ namespace Collision {
     }
 
     bool collideWheel(const Circle& circle, const Wheel& wheel) {
-        float distance = sqrt(pow(circle.shape.getPosition().x - wheel.getPosition().x, 2) +
-            pow(circle.shape.getPosition().y - wheel.getPosition().y, 2));
-        return distance <= (circle.shape.getRadius() + wheel.getRadius());
+        Vector2f wheelCenter = Vector2f(wheel.getPosition().x + wheel.getRadius() / 2.f, wheel.getPosition().y + wheel.getRadius() / 2.f);
+
+        // Wektory normalne do krawêdzi Wheel wheel
+        Vector2f normals[4] = {
+            Vector2f(-1, 0),  // Lewa 
+            Vector2f(1, 0),   // Prawa 
+            Vector2f(0, -1),  // Górna 
+            Vector2f(0, 1)    // Dolna 
+        };
+
+        float x = circle.shape.getPosition().x;
+        float y = circle.shape.getPosition().y;
+        Vector2f vertex(x, y);
+
+        for (const auto& normal : normals) {
+            float circleProjection = projectCircle(circle, normal);
+            float wheelProjection = projectWheel(wheel, normal);
+
+            std::cout << "Normal vector: (" << normal.x << ", " << normal.y << ")" << std::endl;
+            std::cout << "Circle projection: " << circleProjection << std::endl;
+            std::cout << "Wheel projection: " << wheelProjection << std::endl;
+
+            bool overlap = circleProjection >= 0 && circleProjection <= wheelProjection;
+            if (!overlap) {
+                std::cout << "No overlap detected." << std::endl;
+                return false;
+            }
+        }
+
+        std::cout << "Collision detected!" << std::endl;
+        return true;
+    }
+
+    float dotProduct(const Vector2f& a, const Vector2f& b) {
+        return a.x * b.x + a.y * b.y;
+    }
+
+    Vector2f getVertex(const Wheel& wheel, int index) {
+        float x = wheel.getPosition().x;
+        float y = wheel.getPosition().y;
+        float width = wheel.getRadius();
+        float height = wheel.getRadius();
+
+        switch (index) {
+        case 0:
+            return Vector2f(x, y);
+        case 1:
+            return Vector2f(x + width, y);
+        case 2:
+            return Vector2f(x + width, y + height);
+        case 3:
+            return Vector2f(x, y + height);
+        default:
+            assert(false);
+            return Vector2f();
+        }
+    }
+
+    float projectCircle(const Circle& circle, const Vector2f& normal) {
+        Vector2f circlePosition = Vector2f(circle.shape.getPosition().x, circle.shape.getPosition().y);
+        return dotProduct(circlePosition, normal) + circle.shape.getRadius();
+    }
+
+    float projectWheel(const Wheel& wheel, const Vector2f& normal) {
+        float min = FLT_MAX;
+        float max = FLT_MIN;
+
+        for (int i = 0; i < 4; ++i) {
+            Vector2f vertex = getVertex(wheel, i);
+            Vector2f vertexRelative = vertex - Vector2f(wheel.getPosition().x, wheel.getPosition().y);
+            float projection = dotProduct(vertexRelative, normal);
+            projection += wheel.getRadius();
+            min = std::min(min, projection);
+            max = std::max(max, projection);
+        }
+
+        return max - min;
     }
 
     bool collideTriangle(const Circle& circle, const Triangle& triangle) {
@@ -59,20 +137,20 @@ namespace Collision {
             sf::Vector2f circleCenter = circle.shape.getPosition();
             sf::Vector2f rectangleCenter(rectangleBounds.left + rectangleBounds.width / 2.0f, rectangleBounds.top + rectangleBounds.height / 2.0f);
 
-            sf::Vector2f axis1 = sf::Vector2f(rectangle.getBounds().width, 0.0f);
-            sf::Vector2f axis2 = sf::Vector2f(0.0f, rectangle.getBounds().height);
+            sf::Vector2f axis1 = sf::Vector2f(rectangleBounds.width, 0.0f);
+            sf::Vector2f axis2 = sf::Vector2f(0.0f, rectangleBounds.height);
             sf::Vector2f axis3(rectangleBounds.width, rectangleBounds.height);
 
             float circleRadius = circle.shape.getRadius();
-            float rectangleHalfWidth = rectangle.getBounds().width / 2.0f;
-            float rectangleHalfHeight = rectangle.getBounds().height / 2.0f;
+            float rectangleHalfWidth = rectangleBounds.width / 2.0f;
+            float rectangleHalfHeight = rectangleBounds.height / 2.0f;
 
             float projection1 = std::abs((circleCenter.x - rectangleCenter.x) * axis1.x + (circleCenter.y - rectangleCenter.y) * axis1.y);
             float projection2 = std::abs((circleCenter.x - rectangleCenter.x) * axis2.x + (circleCenter.y - rectangleCenter.y) * axis2.y);
             float projection3 = std::abs((circleCenter.x - rectangleCenter.x) * axis3.x + (circleCenter.y - rectangleCenter.y) * axis3.y);
 
-            if (projection1 > (circleRadius + rectangleHalfWidth) || projection2 > (circleRadius + rectangleHalfHeight ||
-                projection3 > (circleRadius + std::sqrt(rectangleHalfWidth * rectangleHalfWidth + rectangleHalfHeight * rectangleHalfHeight)))) {
+            if (projection1 > (circleRadius + rectangleHalfWidth) || projection2 > (circleRadius + rectangleHalfHeight) ||
+                projection3 > (circleRadius + std::sqrt(rectangleHalfWidth * rectangleHalfWidth + rectangleHalfHeight * rectangleHalfHeight))) {
                 return true;
             }
         }
