@@ -3,15 +3,22 @@
 #include "shape.h"
 #include <SFML/Graphics.hpp>
 
-class Rectangle : public Shape {
+class Rectangle : public MyShape
+{
 private:
 	sf::RectangleShape rectangle;
 
 public:
-	Rectangle(int x, int y, float width, float height, sf::Color color);
-	void draw(sf::RenderWindow& window) override;
+	Rectangle( int x, int y, float width, float height, sf::Color color );
+	void draw( sf::RenderWindow& window ) override;
 	sf::FloatRect getBounds() const override;
 	ShapeType getType() const override;
-	sf::Vector2f getPosition() const { return rectangle.getPosition(); }
-	sf::Vector2f getSize() const { return rectangle.getSize(); }
+	sf::Vector2f getPosition() const
+	{
+		return rectangle.getPosition();
+	}
+	sf::Vector2f getSize() const
+	{
+		return rectangle.getSize();
+	}
 };
