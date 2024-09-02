@@ -1,21 +1,9 @@
-/*#include "collision.h"
-#include "circle.h"
-#include "shape.h"
-
-bool Collision::collide(const Circle& circle, const Shape& shape) {
-	sf::FloatRect circleBox = circle.shape.getGlobalBounds();
-	sf::FloatRect shapeBox = shape.getBounds();
-
-	return circleBox.intersects(shapeBox);
-}*/
-
 #include "collision.h"
 #include "shape.h"
 #include "circle.h"
 #include "rectangle.h"
 #include "triangle.h"
 #include "wheel.h"
-#include "vector2f.h"
 #include <cmath>
 #include <cassert>
 #include <iostream>
@@ -65,19 +53,19 @@ bool overlap( const sf::Vector2f& proj1, const sf::Vector2f& proj2 )
 bool collideWheel( const Circle& circle, const Wheel& wheel )
 {
 	sf::Vector2f wheelCenter
-		= Vector2f( wheel.getPosition().x + wheel.getRadius() / 2.f, wheel.getPosition().y + wheel.getRadius() / 2.f );
+		= sf::Vector2f( wheel.getPosition().x + wheel.getRadius() / 2.f, wheel.getPosition().y + wheel.getRadius() / 2.f );
 
-	// Wektory normalne do krawêdzi Wheel wheel
-	static Vector2f normals[ 4 ] = {
-		Vector2f( -1, 0 ), // Lewa
-		Vector2f( 1, 0 ),  // Prawa
-		Vector2f( 0, -1 ), // Górna
-		Vector2f( 0, 1 )   // Dolna
+	// vectors normal to edge
+	static sf::Vector2f normals[ 4 ] = {
+		sf::Vector2f( -1, 0 ), // left
+		sf::Vector2f( 1, 0 ),  // right
+		sf::Vector2f( 0, -1 ), // upper
+		sf::Vector2f( 0, 1 )   // lower
 	};
 
 	float x = circle.shape.getPosition().x;
 	float y = circle.shape.getPosition().y;
-	Vector2f vertex( x, y );
+	sf::Vector2f vertex( x, y );
 
 	for( const auto& normal : normals )
 	{
@@ -95,27 +83,17 @@ bool collideWheel( const Circle& circle, const Wheel& wheel )
 			return false;
 		}
 
-		// std::cout << "Normal vector: (" << normal.x << ", " << normal.y << ")" << std::endl;
-		// std::cout << "Circle projection: " << circleProjection << std::endl;
-		// std::cout << "Wheel projection: " << wheelProjection << std::endl;
-
-		// bool overlap = circleProjection >= 0 && circleProjection <= wheelProjection;
-		// if( !overlap )
-		//{
-		//	std::cout << "No overlap detected." << std::endl;
-		//	return false;
-		//}
 	}
 
 	return true;
 }
 
-float dotProduct( const Vector2f& a, const Vector2f& b )
+float dotProduct( const sf::Vector2f& a, const sf::Vector2f& b )
 {
 	return a.x * b.x + a.y * b.y;
 }
 
-Vector2f getVertex( const Wheel& wheel, int index )
+sf::Vector2f getVertex( const Wheel& wheel, int index )
 {
 	float x		 = wheel.getPosition().x;
 	float y		 = wheel.getPosition().y;
@@ -125,34 +103,34 @@ Vector2f getVertex( const Wheel& wheel, int index )
 	switch( index )
 	{
 	case 0:
-		return Vector2f( x, y );
+		return sf::Vector2f( x, y );
 	case 1:
-		return Vector2f( x + width, y );
+		return sf::Vector2f( x + width, y );
 	case 2:
-		return Vector2f( x + width, y + height );
+		return sf::Vector2f( x + width, y + height );
 	case 3:
-		return Vector2f( x, y + height );
+		return sf::Vector2f( x, y + height );
 	default:
 		assert( false );
-		return Vector2f();
+		return sf::Vector2f();
 	}
 }
 
-float projectCircle( const Circle& circle, const Vector2f& normal )
+float projectCircle( const Circle& circle, const sf::Vector2f& normal )
 {
-	Vector2f circlePosition = Vector2f( circle.shape.getPosition().x, circle.shape.getPosition().y );
+	sf::Vector2f circlePosition = sf::Vector2f( circle.shape.getPosition().x, circle.shape.getPosition().y );
 	return dotProduct( circlePosition, normal ) + circle.shape.getRadius();
 }
 
-float projectWheel( const Wheel& wheel, const Vector2f& normal )
+float projectWheel( const Wheel& wheel, const sf::Vector2f& normal )
 {
 	float min = FLT_MAX;
 	float max = FLT_MIN;
 
 	for( int i = 0; i < 4; ++i )
 	{
-		Vector2f vertex			= getVertex( wheel, i );
-		Vector2f vertexRelative = vertex - Vector2f( wheel.getPosition().x, wheel.getPosition().y );
+		sf::Vector2f vertex			= getVertex( wheel, i );
+		sf::Vector2f vertexRelative = vertex - sf::Vector2f( wheel.getPosition().x, wheel.getPosition().y );
 		float projection		= dotProduct( vertexRelative, normal );
 		projection += wheel.getRadius();
 		min = std::min( min, projection );

@@ -14,9 +14,9 @@ set(COLLISION_SOURCES
     src/main.cpp
     
 
- "src/circle.cpp" "src/circle.h" "src/collision.cpp" "src/collision.h" "src/shape.cpp" "src/shape.h" "src/rectangle.h" "src/rectangle.cpp" "src/wheel.h" "src/wheel.cpp" "src/shapeManager.h" "src/shapeManager.cpp" "src/triangle.h" "src/triangle.cpp" "src/vector2f.h" "src/vector2f.cpp")
+ "src/circle.cpp" "src/circle.h" "src/collision.cpp" "src/collision.h" "src/shape.cpp" "src/shape.h" "src/rectangle.h" "src/rectangle.cpp" "src/wheel.h" "src/wheel.cpp" "src/shapeManager.h" "src/shapeManager.cpp" "src/triangle.h" "src/triangle.cpp")
 
-add_executable(Collision ${COLLISION_SOURCES} "src/circle.cpp" "src/circle.h" "src/collision.cpp" "src/collision.h" "src/shape.cpp" "src/shape.h" "src/rectangle.h" "src/rectangle.cpp" "src/wheel.h" "src/wheel.cpp"  "src/shapeManager.h" "src/shapeManager.cpp" "src/triangle.h" "src/triangle.cpp" "src/vector2f.h" "src/vector2f.cpp")
+add_executable(Collision ${COLLISION_SOURCES} "src/circle.cpp" "src/circle.h" "src/collision.cpp" "src/collision.h" "src/shape.cpp" "src/shape.h" "src/rectangle.h" "src/rectangle.cpp" "src/wheel.h" "src/wheel.cpp"  "src/shapeManager.h" "src/shapeManager.cpp" "src/triangle.h" "src/triangle.cpp")
 
 target_link_libraries(Collision PRIVATE sfml-graphics)
 target_compile_features(Collision PRIVATE cxx_std_20)
