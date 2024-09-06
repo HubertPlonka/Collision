@@ -1,10 +1,11 @@
 #include "circle.h"
 
+//TODO: format code
 void Circle::update()
 {
     velocity.x = 0;
     velocity.y = 0;
-    if (right() < 800 && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
+    if (right() < 800 && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) { // It could be processInput interface.
         velocity.x = circleVelocity/8;
     }
     if (left() > 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {

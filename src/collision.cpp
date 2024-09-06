@@ -10,7 +10,7 @@
 
 namespace Collision
 {
-
+// TODO: interface instead getType? it should be possible to use polymorphism
 bool collide( const Circle& circle, const MyShape& shape )
 {
 	const auto& shapeType = shape.getType();
@@ -29,7 +29,7 @@ bool collide( const Circle& circle, const MyShape& shape )
 	return false;
 }
 
-sf::Vector2f projectCircleOntoAxis( const Circle& circle, const sf::Vector2f& axis )
+sf::Vector2f projectCircleOntoAxis( const Circle& circle, const sf::Vector2f& axis ) //TODO: DRY https://pl.wikipedia.org/wiki/DRY
 {
 	sf::Vector2f center = circle.getPosition();
 	float radius		= circle.getRadius();
@@ -122,7 +122,7 @@ float projectCircle( const Circle& circle, const sf::Vector2f& normal )
 	return dotProduct( circlePosition, normal ) + circle.shape.getRadius();
 }
 
-float projectWheel( const Wheel& wheel, const sf::Vector2f& normal )
+float projectWheel( const Wheel& wheel, const sf::Vector2f& normal ) // Is it needed?
 {
 	float min = FLT_MAX;
 	float max = FLT_MIN;
@@ -140,7 +140,7 @@ float projectWheel( const Wheel& wheel, const sf::Vector2f& normal )
 	return max - min;
 }
 
-bool collideTriangle( const Circle& circle, const Triangle& triangle )
+bool collideTriangle( const Circle& circle, const Triangle& triangle ) //TODO: I think it is possible to use SAT also
 {
 	sf::Vector2f p1 = triangle.getTriangle().getPoint( 0 );
 	sf::Vector2f p2 = triangle.getTriangle().getPoint( 1 );
@@ -154,7 +154,7 @@ bool collideTriangle( const Circle& circle, const Triangle& triangle )
 		|| distance3 < circle.shape.getRadius();
 }
 
-bool collideRectangle( const Circle& circle, const Rectangle& rectangle )
+bool collideRectangle( const Circle& circle, const Rectangle& rectangle ) //TODO: I think it is possible to use SAT also
 {
 	sf::FloatRect circleBounds	  = circle.shape.getGlobalBounds();
 	sf::FloatRect rectangleBounds = rectangle.getBounds();
@@ -213,6 +213,6 @@ float distancePointLine( const sf::Vector2f& point, const sf::Vector2f& lineStar
 
 float distancePointPoint( const sf::Vector2f& p1, const sf::Vector2f& p2 )
 {
-	return sqrt( pow( p1.x - p2.x, 2 ) + pow( p1.y - p2.y, 2 ) );
+	return sqrt( pow( p1.x - p2.x, 2 ) + pow( p1.y - p2.y, 2 ) ); //is is needed? 
 }
 } // namespace Collision

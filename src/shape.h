@@ -9,7 +9,7 @@ enum class ShapeType
 	Triangle
 };
 
-class MyShape
+class MyShape 
 {
 public:
 	virtual void draw( sf::RenderWindow& window ) = 0;

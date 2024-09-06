@@ -10,11 +10,13 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
+#TODO: nice format to make it more readable
+
 set(COLLISION_SOURCES 
     src/main.cpp
     
 
- "src/circle.cpp" "src/circle.h" "src/collision.cpp" "src/collision.h" "src/shape.cpp" "src/shape.h" "src/rectangle.h" "src/rectangle.cpp" "src/wheel.h" "src/wheel.cpp" "src/shapeManager.h" "src/shapeManager.cpp" "src/triangle.h" "src/triangle.cpp")
+ "src/circle.cpp" "src/circle.h" "src/collision.cpp" "src/collision.h" "src/shape.cpp" "src/shape.h" "src/rectangle.h" "src/rectangle.cpp" "src/wheel.h" "src/wheel.cpp" "src/shapeManager.h" "src/shapeManager.cpp" "src/triangle.h" "src/triangle.cpp") 
 
 add_executable(Collision ${COLLISION_SOURCES} "src/circle.cpp" "src/circle.h" "src/collision.cpp" "src/collision.h" "src/shape.cpp" "src/shape.h" "src/rectangle.h" "src/rectangle.cpp" "src/wheel.h" "src/wheel.cpp"  "src/shapeManager.h" "src/shapeManager.cpp" "src/triangle.h" "src/triangle.cpp")
 
