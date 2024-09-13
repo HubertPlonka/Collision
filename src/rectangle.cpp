@@ -5,7 +5,7 @@ Rectangle::Rectangle(int x, int y, float width, float height, sf::Color color) {
 		rectangle.setSize(sf::Vector2f(width, height));
 		rectangle.setFillColor(color);
 };
-void Rectangle::draw(sf::RenderWindow& window){
+void Rectangle::draw(sf::RenderWindow& window) const {
 	window.draw(rectangle);
 };
 

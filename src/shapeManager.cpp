@@ -1,19 +1,23 @@
 #include "shapeManager.h"
 
-void ShapeManager::addShape( std::shared_ptr< MyShape > shape )
+void ShapeManager::addShape(std::shared_ptr< Shape > shape)
 {
-	shapes.push_back( shape );
+	shapes.push_back(shape);
 }
 
-void ShapeManager::drawAll( sf::RenderWindow& window )
+void ShapeManager::drawAll(sf::RenderWindow& window)
 {
-	for( const auto& shape : shapes )
+	for (const auto& shape : shapes)
 	{
-		shape->draw( window );
+		shape->draw(window);
 	}
 }
 
-const std::vector< std::shared_ptr< MyShape > > ShapeManager::getShapes() const
+const std::vector<std::shared_ptr<Shape>>& ShapeManager::getShapes() const
 {
+	return shapes;
+}
+
+std::vector<std::shared_ptr<Shape>>& ShapeManager::getShapes() {
 	return shapes;
 }

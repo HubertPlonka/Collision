@@ -6,7 +6,7 @@ Wheel::Wheel(int x, int y, int radius, sf::Color color) {
 	wheel.setFillColor(color);
 }
 
-void Wheel::draw(sf::RenderWindow& window){
+void Wheel::draw(sf::RenderWindow& window) const {
 	window.draw(wheel);
 }
 
@@ -25,3 +25,4 @@ sf::Vector2f Wheel::getPosition() const {
 float Wheel::getRadius() const {
 	return float(wheel.getRadius());
 }
+

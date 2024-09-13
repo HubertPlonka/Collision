@@ -5,29 +5,26 @@
 #include "rectangle.h"
 #include "shapeManager.h"
 #include "triangle.h"
+#include "processInput.h"
 
 int main()
 {
 	sf::RenderWindow window( sf::VideoMode( 800, 600 ), "Collision!!!!!!!!!!!!!!" );
-	Circle circle( sf::Vector2f( 400, 300 ), 20 );
+	ProcessInput circle(20, sf::Vector2f(400, 300));
 
-	circle.shape.setPosition( 400, 300 );
-	circle.shape.setRadius( 30 );
-	circle.shape.setFillColor( sf::Color::Red );
+	circle.getShape().setPosition( 400, 300 );
+	circle.getShape().setRadius( 30 );
+	circle.getShape().setFillColor( sf::Color::Red );
 	ShapeManager shapeManager;
 
-	Wheel* wheel = new Wheel( 300, 150, 50, sf::Color::Green ); // Maybe one class for circle and wheel. It is same shape. Then Circle class could be another class with moveable option.
-	std::shared_ptr< MyShape > wheelptr( wheel );
-	shapeManager.addShape( wheelptr );
+	std::shared_ptr<Shape> wheel = std::make_shared<Wheel>(300, 150, 50, sf::Color::Green);
+	shapeManager.addShape(wheel);
 
-	Rectangle* rectangle = new Rectangle( 100, 500, 200, 50, sf::Color::Blue ); // TODO: make shared instead new!
-	std::shared_ptr< MyShape > rectangleptr( rectangle );
-	shapeManager.addShape( rectangleptr );
+	std::shared_ptr<Shape> rectangle = std::make_shared<Rectangle>(100, 500, 200, 50, sf::Color::Blue);
+	shapeManager.addShape(rectangle);
 
-	Triangle* triangle = new Triangle(
-		sf::Vector2f( 600, 600 ), sf::Vector2f( 900, 700 ), sf::Vector2f( 520, 520 ), sf::Color::Magenta );
-	std::shared_ptr< MyShape > triangleptr( triangle );
-	shapeManager.addShape( triangleptr );
+	std::shared_ptr<Shape> triangle = std::make_shared<Triangle>(sf::Vector2f(600, 600), sf::Vector2f(900, 700), sf::Vector2f(520, 520), sf::Color::Magenta);
+	shapeManager.addShape(triangle);
 
 	sf::CircleShape collisionShape( 20 );
 
@@ -44,14 +41,14 @@ int main()
 				window.close();
 		}
 
-		circle.update();
+		circle.updateMovement();
 		window.clear();
 		shapeManager.drawAll( window );
-		window.draw( circle.shape ); // why circle is not in shapeManager?
+		window.draw( circle.getShape()); // why circle is not in shapeManager?
 
 		// it should be encapsulated to some class ex. CollisionManager? 
 		bool isColliding = false;
-		for( auto& shape : shapeManager.shapes )
+		for( auto& shape : shapeManager.getShapes())
 		{
 			if( Collision::collide( circle, *shape ) )
 			{
@@ -61,11 +58,11 @@ int main()
 		}
 		if( isColliding )
 		{
-			circle.shape.setFillColor( sf::Color::Yellow );
+			circle.getShape().setFillColor( sf::Color::Yellow );
 		}
 		else
 		{
-			circle.shape.setFillColor( sf::Color::Red );
+			circle.getShape().setFillColor( sf::Color::Red );
 		}
 
 		window.display();

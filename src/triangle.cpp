@@ -9,7 +9,7 @@ Triangle::Triangle(sf::Vector2f x, sf::Vector2f y, sf::Vector2f z, sf::Color col
     triangle_.setFillColor(color);
 }
 
-void Triangle::draw(sf::RenderWindow& window) {
+void Triangle::draw(sf::RenderWindow& window) const {
     window.draw(triangle_);
 }
 
@@ -24,3 +24,4 @@ ShapeType Triangle::getType() const {
 const sf::ConvexShape& Triangle::getTriangle() const {
     return triangle_;
 }
+
