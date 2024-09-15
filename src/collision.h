@@ -6,8 +6,12 @@
 #include "rectangle.h"
 #include "triangle.h"
 
-namespace Collision
-{
+class Wheel;
+class Rectangle;
+class Triangle;
+class Circle;
+
+namespace Collision {
     bool collide(const Circle& circle, const Shape& shape);
     bool collideWheel(const Circle& circle, const Wheel& wheel);
     bool collideRectangle(const Circle& circle, const Rectangle& rectangle);
@@ -19,4 +23,8 @@ namespace Collision
     sf::Vector2f projectTriangleOntoAxis(const Triangle& triangle, const sf::Vector2f& axis);
 
     bool overlap(const sf::Vector2f& proj1, const sf::Vector2f& proj2);
+
+    bool collide(const Circle& circle, const Shape& shape);
+    template<typename T1, typename T2>
+    std::string getCollisionType(const T1& shape1, const T2& shape2);
 }

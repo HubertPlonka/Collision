@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shape.h"
+#include "collision.h"
 #include <SFML/Graphics.hpp>
 
 class Rectangle : public Shape
@@ -21,4 +22,5 @@ public:
 	{
 		return rectangle.getSize();
 	}
+	bool collide(const Circle& circle) const override;
 };

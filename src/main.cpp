@@ -20,11 +20,11 @@ int main()
 	std::shared_ptr<Shape> wheel = std::make_shared<Wheel>(300, 150, 50, sf::Color::Green);
 	shapeManager.addShape(wheel);
 
-	std::shared_ptr<Shape> rectangle = std::make_shared<Rectangle>(100, 500, 200, 50, sf::Color::Blue);
+	std::shared_ptr<Shape> rectangle = std::make_shared<Rectangle>(100, 300, 200, 50, sf::Color::Blue);
 	shapeManager.addShape(rectangle);
 
-	std::shared_ptr<Shape> triangle = std::make_shared<Triangle>(sf::Vector2f(600, 600), sf::Vector2f(900, 700), sf::Vector2f(520, 520), sf::Color::Magenta);
-	shapeManager.addShape(triangle);
+	/*std::shared_ptr<Shape> triangle = std::make_shared<Triangle>(sf::Vector2f(490, 400), sf::Vector2f(620, 420), sf::Vector2f(500, 500), sf::Color::Magenta);
+	shapeManager.addShape(triangle);*/
 
 	sf::CircleShape collisionShape( 20 );
 

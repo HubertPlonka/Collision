@@ -25,3 +25,6 @@ const sf::ConvexShape& Triangle::getTriangle() const {
     return triangle_;
 }
 
+bool Triangle::collide(const Circle& circle) const {
+    return Collision::collideTriangle(circle, *this);
+}

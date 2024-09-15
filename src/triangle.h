@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shape.h"
+#include "collision.h"
 #include <SFML/Graphics.hpp>
 
 class Triangle : public Shape
@@ -14,4 +15,5 @@ public:
 	sf::Rect<float> getBounds() const override;
 	ShapeType getType() const override;
 	const sf::ConvexShape& getTriangle() const;
+	bool collide(const Circle& circle) const override;
 };

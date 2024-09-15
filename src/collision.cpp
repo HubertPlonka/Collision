@@ -3,13 +3,30 @@
 #include "wheel.h"
 #include "rectangle.h"
 #include "triangle.h"
+#include <iostream>
+#include <string>
+#include <type_traits>
 
 namespace Collision {
     bool collide(const Circle& circle, const Shape& shape) {
-
-        return shape.collide(circle);
-
+        bool result = shape.collide(circle);
+        if (result) {
+            if (typeid(shape) == typeid(Wheel)) {
+                std::string collisionType = "Circle-Wheel";
+                std::cout << "Collision detected: " << collisionType << std::endl;
+            }
+            else if (typeid(shape) == typeid(Rectangle)) {
+                std::string collisionType = "Circle-Rectangle";
+                std::cout << "Collision detected: " << collisionType << std::endl;
+            }
+            else if (typeid(shape) == typeid(Triangle)) {
+                std::string collisionType = "Circle-Triangle";
+                std::cout << "Collision detected: " << collisionType << std::endl;
+            }
+        }
+        return result;
     }
+
 
     bool collideWheel(const Circle& circle, const Wheel& wheel) {
         sf::Vector2f axes[4] = {
@@ -83,30 +100,14 @@ namespace Collision {
     }
 
     sf::Vector2f projectRectangleOntoAxis(const Rectangle& rectangle, const sf::Vector2f& axis) {
-        sf::Vector2f minProjection = rectangle.getBounds().getPosition();
-        sf::Vector2f maxProjection = rectangle.getBounds().getPosition() + rectangle.getBounds().getSize();
+        sf::Vector2f halfSize = rectangle.getBounds().getSize() / 2.f;
+        sf::Vector2f center = rectangle.getBounds().getPosition() + halfSize;
 
-        sf::Vector2f vertices[4] = {
-            sf::Vector2f(minProjection.x, minProjection.y),
-            sf::Vector2f(maxProjection.x, minProjection.y),
-            sf::Vector2f(maxProjection.x, maxProjection.y),
-            sf::Vector2f(minProjection.x, maxProjection.y)
-        };
+        float projection = (center.x * axis.x + center.y * axis.y);
+        float minProjection = projection - halfSize.x * std::abs(axis.x) - halfSize.y * std::abs(axis.y);
+        float maxProjection = projection + halfSize.x * std::abs(axis.x) + halfSize.y * std::abs(axis.y);
 
-        float minProj = std::numeric_limits<float>::max();
-        float maxProj = std::numeric_limits<float>::min();
-
-        for (const auto& vertex : vertices) {
-            float projection = vertex.x * axis.x + vertex.y * axis.y;
-            if (projection < minProj) {
-                minProj = projection;
-            }
-            if (projection > maxProj) {
-                maxProj = projection;
-            }
-        }
-
-        return sf::Vector2f(minProj, maxProj);
+        return sf::Vector2f(minProjection, maxProjection);
     }
 
     sf::Vector2f projectTriangleOntoAxis(const Triangle& triangle, const sf::Vector2f& axis) {

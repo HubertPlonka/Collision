@@ -16,3 +16,7 @@ sf::FloatRect Rectangle::getBounds() const {
 ShapeType Rectangle::getType() const {
 	return ShapeType::Rectangle;
 }
+
+bool Rectangle::collide(const Circle& circle) const {
+	return Collision::collideRectangle(circle, *this);
+}
